@@ -1,34 +1,33 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
+        
+        set<vector<int>> v;
+        int n = nums.size(); 
         sort(nums.begin(),nums.end());
-        vector<vector<int>> ts;
-        int n = nums.size();
-        for(int i=0;i<nums.size();i++)
+        for(int i=2;i<n;i++)
         {
-            int l = i+1;
-            int r = n-1;
-            vector<int> v;
-            while(l<r)
+            int l = 0;
+            int r = i-1;
+            if(nums[l]+nums[l+1]+nums[i]>0)
             {
+                continue;
+            }
+            if(nums[r-1]+nums[r]+nums[i]<0)
+            {
+                continue;
+            }
+            while(l<r)
+            {  
                 if(nums[l]+nums[r]+nums[i]==0)
                 {
-                     
-                        v.push_back(nums[i]);
-                        v.push_back(nums[l]);
-                        v.push_back(nums[r]);
-                        l++;
-                        ts.push_back(v);
-                        v.clear();
-                        while(l<i and nums[l]==nums[l+1])
-                        {
-                            l++;
-                        }
-                    
-                        while(r>i and nums[r]==nums[r-1])
-                        {
-                            r--;
-                        }
+                    v.insert({nums[l],nums[r],nums[i]}); 
+                    while(l<nums.size()-1 and nums[l]==nums[l+1] and l<r){
+                    l++;}
+                    while(r>=1 and nums[r]==nums[r-1] and l<r){
+                    r--;}
+                    l++;
+                    r--;
                 }
                 else if(nums[l]+nums[r]+nums[i]>0)
                 {
@@ -37,11 +36,17 @@ public:
                 else
                 {
                     l++;
-                }
+                }       
             }
         }
-        sort(ts.begin(),ts.end());
-        ts.erase( unique( ts.begin(), ts.end() ), ts.end() );
-        return ts;
+        vector<vector<int>> vv;
+        auto it = v.begin();
+        for(int i=0;i<v.size();i++)
+        {   
+            vector<int> point = *it;
+            vv.push_back(point);
+            it++;
+        }
+        return vv;
     }
 };
