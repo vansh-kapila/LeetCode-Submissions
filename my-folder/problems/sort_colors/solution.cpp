@@ -10,15 +10,15 @@ public:
         {
             if(nums[j]==0)
             {
-               swap(nums[i++],nums[j++]);
-            } 
-            else if(nums[j]==1)
-            {
-                j++;
+                swap(nums[i++],nums[j++]); 
             }
             else if(nums[j]==2)
             {
                 swap(nums[j],nums[k--]);
+            }
+            else
+            {
+                j++;
             }
         }
     }
