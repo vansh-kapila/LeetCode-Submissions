@@ -1,15 +1,22 @@
 class Solution {
 public:
     int climbStairs(int n) {
-       int arr[45];
-        arr[0]=1;
-        arr[1]=2;
-        
-        for(int i=2;i<45;i++)
+        int dp[n+1];
+        if(n==1)
         {
-            arr[i]=arr[i-1]+arr[i-2];
+            return 1;
         }
-        return arr[n-1];
-        
+        if(n==2)
+        {
+            return 2;
+        }
+        dp[0]=0;
+        dp[1]=1;
+        dp[2]=2;
+        for(int i=3;i<=n;i++)
+        {
+            dp[i]=dp[i-1]+dp[i-2];
+        }
+        return dp[n];
     }
 };
