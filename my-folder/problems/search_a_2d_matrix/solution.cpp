@@ -1,18 +1,24 @@
 class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        int n = matrix[0].size();
+        int i = 0;
+        int j = matrix[0].size()-1; 
         
-        for(int i=0;i<matrix.size();i++)
-        {  
-            if(matrix[i][0]<=target and matrix[i][n-1]>=target){
-            vector<int> v = matrix[i];
-            
-                for(int j=0;j<matrix[0].size();j++)
-                {
-                return binary_search(v.begin(),v.end(),target);
-                }
-        }}
+        while(i<matrix.size() and j>=0)
+        {
+            if(matrix[i][j]==target)
+            {
+                return true;
+            }
+            else if(matrix[i][j]>target)
+            {
+                j--; 
+            }
+            else
+            {
+                i++;
+            }
+        }
         return false;
     }
 };
