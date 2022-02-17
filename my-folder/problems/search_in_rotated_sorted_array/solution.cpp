@@ -1,29 +1,41 @@
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
-        int n = nums.size(); 
-        int lo=0,hi=n-1;
-         vector<int> A = nums;
-        // find the index of the smallest value using binary search.
-        // Loop will terminate since mid < hi, and lo or hi will shrink by at least 1.
-        // Proof by contradiction that mid < hi: if mid==hi, then lo==hi and loop would have been terminated.
-        while(lo<hi){
-            int mid=(lo+hi)/2;
-            if(A[mid]>A[hi]) lo=mid+1;
-            else hi=mid;
+        
+        int l = 0;
+        int r = nums.size();
+        if(nums[l]==target)
+        {
+            return l;
         }
-        // lo==hi is the index of the smallest value and also the number of places rotated.
-        int rot=lo;
-        lo=0;hi=n-1;
-        // The usual binary search and accounting for rotation.
-        while(lo<=hi){
-            int mid=(lo+hi)/2;
-            int realmid=(mid+rot)%n;
-            if(A[realmid]==target)return realmid;
-            if(A[realmid]<target)lo=mid+1;
-            else hi=mid-1;
+        if(nums[r-1]==target)
+        {
+            return r-1;
+        }
+        while(l<r)
+        {
+            int mid = (l+r)/2;
+            if(nums[mid]==target)
+            {
+               return mid;
+            } 
+            else if(nums[mid]>nums[0] and target<nums[0])
+            {
+                l=mid+1;
+            }
+            else if(nums[mid]>nums[0] and target>nums[0] and target>nums[mid])
+            {
+                l=mid+1;
+            }
+            else if(nums[mid]<nums[0] and target<nums[0] and target>nums[mid])
+            {
+                l=mid+1;
+            }
+            else
+            {
+                r = mid;
+            }
         }
         return -1;
     }
-    
 };
