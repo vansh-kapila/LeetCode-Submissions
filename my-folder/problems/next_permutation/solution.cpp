@@ -1,25 +1,33 @@
-class Solution {
-public:
-    void nextPermutation(vector<int>& nums) {
-        multiset<int> s;
-        for(int i=nums.size()-1;i>=0;i--)
-        {
-            s.insert(nums[i]);
-            auto it = s.upper_bound(nums[i]);
-            if(it!=s.end())
-            {   nums[i]=*it;
-                s.erase(it);
-                for(int j=i+1;j<nums.size();j++)
+class Solution
+{
+    public:
+        void nextPermutation(vector<int> &nums)
+        { 
+            int ind = -1;
+            for (int i = nums.size() - 2; i >= 0; i--)
+            {
+                if (nums[i] < nums[i + 1])
                 {
-                    nums[j] = *s.begin();
-                    s.erase(s.begin());
+                    ind = i;
+                    break;
                 }
-                break;
             }
+
+            if (ind == -1)
+            {
+                reverse(nums.begin(), nums.end());
+                return;
+            }
+            int k = -1;
+            for (int i = nums.size() - 1; i >= 0; i--)
+            {
+                if (nums[i] > nums[ind])
+                {
+                    k = i;
+                    break;
+                }
+            }
+            swap(nums[ind], nums[k]);
+            reverse(nums.begin() + ind + 1, nums.end());
         }
-        if(!s.empty())
-        {
-            sort(nums.begin(),nums.end());
-        }
-    }
 };
