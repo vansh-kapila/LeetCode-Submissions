@@ -11,7 +11,7 @@ public:
         }
         else
         {
-            return x*power(x*x,n/2);
+            return power(x*x,n/2)*x;
         }
     }
     
