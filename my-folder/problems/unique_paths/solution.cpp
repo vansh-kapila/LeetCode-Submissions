@@ -1,32 +1,30 @@
-class Solution {
-public: 
-    int solve(vector<vector<int>> &dp,int n,int m)
-    {
-        if(n==0 and m==0)
-        {   
-            return 1;
-        }
-        if(n<0 or m<0)
+class Solution
+{
+    public:
+
+        int solve(int m, int n,vector<vector<int>> &dp)
         {
-            return 0;
-        }
-        if(dp[n][m]!=-1)
-        {
-            return dp[n][m];
-        }
-        int ans = solve(dp,n-1,m)+solve(dp,n,m-1);
-        return dp[n][m]=ans;
-    }
-    int uniquePaths(int m, int n) {
-        vector<vector<int>> dp(n);
-        dp.resize(n);
-        for(int i=0;i<n;i++)
-        {
-            for(int j=0;j<m;j++)
+            if (m == 0 and n == 0)
             {
-                dp[i].push_back(-1);
+                return 1;
             }
+            if (m < 0 or n < 0)
+            {
+                return 0;
+            }
+            if(dp[m][n]!=-1)
+            {
+                return dp[m][n];
+            }
+            int up = solve(m, n - 1, dp);
+            int down = solve(m - 1, n, dp);
+
+            return dp[m][n]=up + down;
         }
-        return solve(dp,n-1,m-1);
+
+    int uniquePaths(int m, int n)
+    {
+        vector<vector<int>> dp(m+1, vector<int>(n+1, -1));
+        return solve(m - 1, n - 1, dp);
     }
 };
