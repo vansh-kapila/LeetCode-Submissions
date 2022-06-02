@@ -3,37 +3,52 @@ class Solution
     public:
         vector<vector < int>> fourSum(vector<int> &nums, int target)
         {
-            set<vector < int>> s;
-            map < long long, int> ind;
-            long long n = nums.size();
-            set<int> c;
-            for (int i = 0; i < n; i++)
+            vector<vector < int>> ans;
+            sort(nums.begin(), nums.end());
+            if (nums.size() == 1 or nums.size()==2)
             {
-                ind[nums[i]] = i + 1;
-                c.insert(nums[i]);
+                return ans;
             }
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < nums.size() - 3; i++)
             {
-                for (int j = i + 1; j < n; j++)
-                {
-                    for (int k = j + 1; k < n; k++)
-                    {    
-                        long long y = (long long)(target) - (long long)nums[i] - (long long)nums[j] - (long long)nums[k];
-                        if (y >= INT_MIN and c.find(y) != c.end() and ind[target - nums[i] - nums[j] - nums[k]] - 1 > k)
+                for (int j = i + 1; j < nums.size() - 2; j++)
+                {  
+                    if(nums[i]+nums[j]>target and target>=0)
+                    {
+                        break;
+                    }
+                    if((long long)nums[i]+(long long)nums[j]+(long long)nums[j+1]+(long long)nums[j+2]>target)
+                    {
+                        break;
+                    }
+                    int lo = j + 1;
+                    int hi = nums.size() - 1;
+                    while (lo < hi)
+                    {
+                        if ((long long) nums[i] + (long long) nums[j] + (long long) nums[lo] + (long long) nums[hi] == target)
                         {
-                            vector<int> v = { nums[i],
+                            ans.push_back({ nums[i],
                                 nums[j],
-                                nums[k],
-                                nums[ind[target - nums[i] - nums[j] - nums[k]] - 1]
-                            };
-                            sort(v.begin(), v.end());
-                            s.insert(v);
+                                nums[lo],
+                                nums[hi] });
+                            lo++;
+                            hi--;
+                        }
+                        else if ((long long) nums[i] + (long long) nums[j] + (long long) nums[lo] + (long long) nums[hi] > target)
+                        {
+                            hi--;
+                        }
+                        else
+                        {
+                            lo++;
                         }
                     }
                 }
             }
-            vector<vector < int>> ans;
-            for (auto i: s)
+
+            set<vector < int>> s(ans.begin(), ans.end());
+            ans.clear();
+            for (auto &i: s)
             {
                 ans.push_back(i);
             }
