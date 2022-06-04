@@ -1,48 +1,66 @@
-class Solution {
-public:
-    vector<vector<int>> threeSum(vector<int>& nums) {
-        sort(nums.begin(),nums.end()); 
-        set<vector<int>> ans;
-        vector<vector<int>> ans2;
-        if(nums.size()<=2)
-        {
-            return ans2;
+class Solution
+{
+    public:
+        vector<vector < int>> threeSum(vector<int> &nums)
+        {   
+            map<int,int> m;
+            for(auto i:nums)
+            {
+                m[i]++;
+            }
+            nums.clear();
+            for(auto i:m)
+            {   
+                for(int j=0;j<min(i.second,3);j++)
+                {
+                    nums.push_back(i.first);
+                }
+            }
+            set<vector < int>> s;
+            sort(nums.begin(), nums.end());
+            if (nums.size() == 1 or nums.size() == 0)
+            {
+                vector<vector < int>> v;
+                return v;
+            }
+            for (int i = 0; i < nums.size() - 2; i++)
+            {
+                int l = i + 1;
+                int r = nums.size() - 1;
+                if(nums[r-1]+nums[r]+nums[i]<0)
+                {
+                    continue;
+                }
+                if(nums[l]+nums[l+1]+nums[i]>0)
+                {
+                    break;
+                }
+                while (l < r)
+                {
+                    if (nums[l] + nums[r] + nums[i] == 0)
+                    {
+                        s.insert({ nums[i],
+                            nums[l],
+                            nums[r] });
+                        l++;
+                        r--;
+                    }
+                    else if (nums[l] + nums[r] + nums[i] > 0)
+                    {
+                        r--;
+                    }
+                    else
+                    {
+                        l++;
+                    }
+                }
+            }
+            vector<vector < int>> ans;
+            for (auto &i: s)
+            {
+                ans.push_back(i);
+            }
+
+            return ans;
         }
-        for(int i=2;i<nums.size();i++)
-        {
-            int x = nums[i];
-            int l = 0;
-            int r = i-1;
-            if(x+nums[l]+nums[l+1]>0)
-            {
-                continue;
-            }
-            if(x+nums[r]+nums[r-1]<0)
-            {
-                continue;
-            }
-            while(l<r)
-            {
-                if(l<i and r<i and nums[l]+nums[r]+nums[i]==0)
-                {
-                    ans.insert({nums[l],nums[i],nums[r]});
-                    l++;
-                    r--;
-                }
-                else if(nums[l]+nums[r]+nums[i]>0)
-                {
-                    r--;
-                }
-                else
-                {
-                    l++;
-                }
-            }
-        }  
-        for(auto i:ans)
-        {
-            ans2.push_back(i);
-        }
-        return ans2;
-    }
 };
