@@ -1,22 +1,30 @@
 class Solution {
 public:
-    bool isHappy(int n) {
-        
-        while(n/10!=0)
+    bool isHappy(int n)
+    {
+        int sum,m,x=n;
+        set<int> s; 
+        do
         {
-            int ans = 0;
-            while(n!=0)
+            sum=0;
+            while(x>0)
             {
-                ans+=(n%10)*(n%10);
-                n=n/10;
+                m=x%10;
+                sum+=m*m;
+                x=x/10;
             }
-            n=ans;
+            if(sum==1)
+            {
+                return true;
+            }
+            else
+            {  
+                s.insert(x);
+                x=sum;
+            }
         }
+        while(x==7 or (x<2 or x>=10));
         
-        if(n==1 or n==7)
-        {
-            return true;
-        }
         return false;
     }
 };
