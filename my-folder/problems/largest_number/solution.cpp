@@ -1,32 +1,26 @@
 class Solution {
 public:
-    static bool func(string a,string b)
-    { 
-       return a+b>b+a;
+    static bool comp(string &x,string &y)
+    {
+        return x+y>y+x;
     }
     string largestNumber(vector<int>& nums) {
-        
-        vector<string> str;
-        
-        for(int i=0;i<nums.size();i++)
+        vector<string> cast;
+        for(auto i:nums)
         {
-            str.push_back(to_string(nums[i]));
+            cast.push_back(to_string(i));
         }
-        
-        sort(str.begin(),str.end(),func);
         
         string ans;
-        
-        for(int i=0;i<nums.size();i++)
+        sort(cast.begin(),cast.end(),comp);
+        for(auto &i:cast)
         {
-            ans+=str[i];
-            if(ans=="0")
-            {
-                return ans;
-            }
+            ans.append(i);
         }
-        
+        if(ans[0]=='0')
+        {
+            return "0";
+        }
         return ans;
-        
     }
 };
