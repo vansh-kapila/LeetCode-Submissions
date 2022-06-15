@@ -1,39 +1,30 @@
 class Solution {
 public:
-    static bool comp(pair<int,string> p,pair<int,string> q)
+    static bool comp(pair<int,string> x,pair<int,string> y)
     {
-        if(p.first>q.first)
+        if(x.first==y.first)
         {
-            return true;
+            return x.second<y.second;
         }
-        if(p.first==q.first)
-        {
-            return p.second<q.second;
-        }
-        return false;
+        return x.first>y.first;
     }
     vector<string> topKFrequent(vector<string>& words, int k) {
         vector<pair<int,string>> v;
-        
         map<string,int> m;
-        for(int i=0;i<words.size();i++)
+        for(auto i:words)
         {
-            m[words[i]]++;
+            m[i]++;
         }
-        
         for(auto i:m)
         {
-            v.push_back(make_pair(i.second,i.first));
+            v.push_back({i.second,i.first});
         }
-        
         sort(v.begin(),v.end(),comp);
-        
         vector<string> ans;
         for(int i=0;i<k;i++)
         {
             ans.push_back(v[i].second);
         }
         return ans;
-        
     }
 };
