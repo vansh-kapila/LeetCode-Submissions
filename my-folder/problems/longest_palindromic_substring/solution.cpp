@@ -1,68 +1,59 @@
-class Solution {
-public:
-    string longestPalindrome(string s) {
-        int l = 0;
-        int n = s.length();
-        string ans;
-        for(int i=0;i<s.length();i++)
+class Solution
+{
+    public:
+        string longestPalindrome(string s)
         {
-            string temp;
-            temp.push_back(s[i]);
-            int l = i-1;
-            int r = i+1;
-            while(l>=0 and r<n)
+           	//odd length palindrome
+            int maxx = 0;
+            string pal;
+            for (int i = 0; i < s.length(); i++)
             {
-                if(s[l]==s[r])
+                int j = 1;
+                int ans = 1;
+                while (i - j >= 0 and i + j < s.length())
                 {
-                    temp.push_back(s[l]);
-                    l--;
-                    r++;
+                    if (s[i - j] == s[i + j])
+                    {
+                        ans += 2;
+                        j++;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
-                else
+                if (maxx < ans)
                 {
-                    break;
+                    maxx = ans;
+                    pal = s.substr(i - j + 1, maxx);
                 }
             }
-            if(temp.length()>ans.length())
+           	//even length palindrome  
+            for (int i = 0; i < s.length() - 1; i++)
             {
-                ans = temp;
+                if (s[i] == s[i + 1])
+                {
+                    int j = 1;
+                    int ans = 2;
+                    while (i - j >= 0 and i + j + 1 < s.length())
+                    {
+                        if (s[i - j] == s[i + j + 1])
+                        {
+                            ans += 2;
+                            j++;
+                        }
+                        else
+                        { 
+                            break;
+                        }
+                    }
+                    if (maxx < ans)
+                    {
+                        maxx = ans;
+                        pal = s.substr(i - j + 1, maxx);
+                    }
+                }
             }
+            return pal;
         }
-        if(!ans.empty()){
-        string x = ans;
-        reverse(x.begin(),x.end());
-        ans.erase(ans.begin());
-        x.append(ans);
-        ans = x;}
-        for(int i=0;i<s.length();i++)
-        {
-            string temp;
-            if(s[i]==s[i+1] and i+1<s.length()){
-            temp.push_back(s[i]); 
-            int l = i-1;
-            int r = i+2;
-            while(l>=0 and r<n)
-            {
-                if(s[l]==s[r])
-                {
-                    temp.push_back(s[l]);
-                    l--;
-                    r++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            if(temp.length()>=(ans.length()+1)/2)
-            {
-                string x = temp;
-                reverse(temp.begin(),temp.end());
-                temp=temp+x;
-                ans = temp;
-            }
-            }
-        }
-        return ans;
-    }
 };
