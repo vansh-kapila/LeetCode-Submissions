@@ -1,24 +1,31 @@
 class Solution {
 public:
+    int solve(vector<int> &nums,int n,bool last_taken,vector<vector<int>> &dp)
+    {
+        if(n==0)
+        {
+            return 0;
+        }
+        if(dp[n-1][last_taken]!=-1)
+        {
+            return dp[n-1][last_taken];
+        }
+        int inc = 0;
+        int exc = 0;
+        if(!last_taken)
+        {
+            inc = nums[n-1]+solve(nums,n-1,1,dp);
+        }
+        exc = solve(nums,n-1,0,dp);
+        return dp[n-1][last_taken]=max(inc,exc);
+    }
     int rob(vector<int>& nums) {
-        int n = nums.size();
-        if(n==1)
+        vector<vector<int>> dp(nums.size()+1);
+        for(int i=0;i<nums.size()+1;i++)
         {
-            return nums[0];
+            dp[i].push_back(-1);
+            dp[i].push_back(-1);
         }
-        else if(n==2)
-        {
-            return max(nums[0],nums[1]);
-        }
-        else{
-         int ans[n];
-         ans[0] = nums[0];
-         ans[1] = max(nums[1],nums[0]); 
-         for(int i = 2;i<n;i++)
-         {
-             ans[i]=max(nums[i]+ans[i-2],ans[i-1]);
-         }
-        
-        return ans[n-1];}
+        return solve(nums,nums.size(),0,dp);
     }
 };
