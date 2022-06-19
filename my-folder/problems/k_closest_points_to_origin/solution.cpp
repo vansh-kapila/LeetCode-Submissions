@@ -1,16 +1,19 @@
 class Solution {
 public:
     vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
-        vector<pair<int,vector<int>>> store;
-        for(int i=0;i<points.size();i++)
+        vector<pair<int,vector<int>>> v;
+        
+        for(auto i:points)
         {
-            store.push_back({abs(points[i][0])*abs(points[i][0])+abs(points[i][1])*abs(points[i][1]),points[i]});
+            v.push_back({i[0]*i[0]+i[1]*i[1],i});
         }
-        sort(store.begin(),store.end());
+        
+        sort(v.begin(),v.end());
+        
         vector<vector<int>> ans;
         for(int i=0;i<k;i++)
         {
-            ans.push_back(store[i].second);
+            ans.push_back(v[i].second);
         }
         return ans;
     }
