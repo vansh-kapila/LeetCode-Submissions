@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int minNumberOperations(vector<int>& target) {
+          
+        int ans = 0;
+        int z = 0;
+        for(int i=0;i<target.size()-1;i++)
+        {
+            ans = ans+max(z,target[i+1]-target[i]);
+        }
+        return ans+target[0];
+    }
+};
