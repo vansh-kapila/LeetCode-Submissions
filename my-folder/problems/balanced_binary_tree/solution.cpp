@@ -20,7 +20,7 @@ public:
         }
         if(mdepth.find(root)!=mdepth.end())
         {
-           // return mdepth[root];
+            return mdepth[root];
         }
         return mdepth[root]=max(depth(root->left),depth(root->right))+1;
     }
