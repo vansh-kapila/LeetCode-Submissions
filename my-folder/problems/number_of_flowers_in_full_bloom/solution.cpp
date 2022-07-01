@@ -1,24 +1,22 @@
 class Solution {
 public:
     vector<int> fullBloomFlowers(vector<vector<int>>& flowers, vector<int>& persons) {
-        sort(flowers.begin(),flowers.end());
-        vector<int> x;
-        vector<int> y;
-        for(int i=0;i<flowers.size();i++)
+        vector<int> start;
+        vector<int> endd;
+        for(auto i:flowers)
         {
-            x.push_back(flowers[i][0]);
-            y.push_back(flowers[i][1]);
+            start.push_back(i[0]);
+            endd.push_back(i[1]);
         }
-        
-        sort(x.begin(),x.end());
-        sort(y.begin(),y.end());
-        
+        //answer is number of elements less than i in start - number of elements less than i in end.
+        sort(start.begin(),start.end());
+        sort(endd.begin(),endd.end());
         vector<int> ans;
         for(auto i:persons)
         {
-            int xx = lower_bound(x.begin(),x.end(),i+1)-x.begin();
-                int yy = lower_bound(y.begin(),y.end(),i)-y.begin();
-            ans.push_back(xx-yy);
+            auto it = upper_bound(start.begin(),start.end(),i)-start.begin();
+            auto it2 = lower_bound(endd.begin(),endd.end(),i)-endd.begin();
+            ans.push_back(it-it2);
         }
         return ans;
     }
