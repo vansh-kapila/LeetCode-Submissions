@@ -1,25 +1,57 @@
 class Solution {
 public:
     int numSplits(string s) {
-        unordered_map<char,int> s1;
-        unordered_map<char,int> s2;
-        int count = 0;
+        vector<vector<int>> pref(s.length(),vector<int>(26,0));
+        vector<vector<int>> suff(s.length(),vector<int>(26,0));
+        
         for(int i=0;i<s.length();i++)
-        {
-            s2[s[i]]++;
-        }
-        for(int i=0;i<s.length();i++)
-        {
-            if(s1.size()==s2.size())
+        { 
+            if(i==0)
             {
-                count++;
-            } 
-            s2[s[i]]--;
-            if(s2[s[i]]==0)
-            {
-                s2.erase(s2.find(s[i]));
+                pref[i][s[i]-'a']++;
             }
-            s1[s[i]]++;
+            else
+            {
+                pref[i]=pref[i-1];
+                pref[i][s[i]-'a']++;
+            }
+        }
+        
+        
+        for(int i=s.length()-1;i>=0;i--)
+        {
+            if(i==s.length()-1)
+            {
+                suff[i][s[i]-'a']++;
+            }
+            else
+            {
+                suff[i]=suff[i+1];
+                suff[i][s[i]-'a']++;
+            }
+        } 
+        int count = 0;
+        for(int i=1;i<s.length();i++)
+        {
+            int distpref=0,distsuff=0;
+            for(auto &j:pref[i-1])
+            {  
+                if(j>0)
+                { 
+                    distpref++;
+                }
+            }
+            for(auto &j:suff[i])
+            {
+                if(j>0)
+                { 
+                    distsuff++;
+                }
+            }
+            if(distpref==distsuff)
+            { 
+                count++;
+            }
         }
         return count;
     }
