@@ -1,46 +1,41 @@
 /**
- *Definition for a binary tree node.
- *struct TreeNode {
- *   int val;
- *   TreeNode * left;
- *   TreeNode * right;
- *   TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *   TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- *};
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
-class Solution
-{
-    public: 
-    vector<TreeNode*> solve(int start, int end)
-    {
-        if (end < start)
+class Solution {
+public:
+    vector<TreeNode*> solve(int l,int r)
+    { 
+        if(l>r)
         {
-            return {NULL};
+            return {nullptr};
         }
-        vector<TreeNode*> ans;
-        for (int root = start; root <= end; root++)
-        {
-            vector<TreeNode*> leftTree;
-            vector<TreeNode*> rightTree;
-            leftTree = solve(start, root - 1);
-            rightTree = solve(root + 1, end);
-            for(auto l:leftTree)
+        vector<TreeNode*> ans; 
+        for(int i=l;i<=r;i++)
+        { 
+            vector<TreeNode*> left = solve(l,i-1);
+            vector<TreeNode*> right = solve(i+1,r);
+            for(auto k:left)
             {
-                for(auto r:rightTree)
+                for(auto j:right)
                 {
-                    TreeNode* newRoot = new TreeNode(root);
-                    newRoot->left = l;
-                    newRoot->right = r;
-                    ans.push_back(newRoot);
+                    TreeNode* root = new TreeNode(i);
+                    root->left = k;
+                    root->right = j;
+                    ans.push_back(root);
                 }
             }
         }
         return ans;
     }
-    vector<TreeNode*> generateTrees(int n)
-    {
-        set<int> taken;
-        return solve(1,n);
+    vector<TreeNode*> generateTrees(int n) {
+         return solve(1,n);
     }
 };
