@@ -1,2 +1,2 @@
 # LeetCode-Submissions
-Collection of LeetCode questions
+Collection of my Leetcode Submissions.
