@@ -16,10 +16,10 @@ public:
         {
             return nullptr;
         }
-        TreeNode* x = invertTree(root->right);
-        TreeNode* y = invertTree(root->left);
-        root->left = x;
-        root->right = y;
+        
+        TreeNode* y = invertTree(root->right);
+        root->right = invertTree(root->left);
+        root->left = y;
         return root;
     }
 };
