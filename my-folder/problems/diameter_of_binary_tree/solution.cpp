@@ -10,28 +10,21 @@
  * };
  */
 class Solution {
-public: 
-    unordered_map<TreeNode*,int> store;
+public:
     int depth(TreeNode* root)
     {
         if(root==nullptr)
         {
             return 0;
-        } 
-        if(store.find(root)!=store.end())
-        {
-            return store[root];
         }
-        return store[root]=1+max(depth(root->left),depth(root->right));
+        return max(depth(root->right),depth(root->left))+1;
     }
     int diameterOfBinaryTree(TreeNode* root) {
-          
         if(root==nullptr)
         {
             return 0;
         }
-        int ans = 0;
-        ans = max({diameterOfBinaryTree(root->left),diameterOfBinaryTree(root->right),depth(root->right)+depth(root->left),ans});
-        return ans;
+        
+        return max({depth(root->left)+depth(root->right),diameterOfBinaryTree(root->right),diameterOfBinaryTree(root->left)});
     }
 };
