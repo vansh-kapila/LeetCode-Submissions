@@ -1,16 +1,15 @@
 class Solution {
 public:
-    int maxProduct(vector<int>& arr) {
-        int maxh = 1; 
-        int ans = arr[0];
-        int minh = 1;
-        for(int i=0;i<arr.size();i++)
-        { 
-            ans = max({maxh*arr[i],ans,minh*arr[i]});
-            int y = minh;
-            minh = min({1,maxh*arr[i],minh*arr[i]});
-            maxh = max({1,maxh*arr[i],y*arr[i]});
-            //cout<<maxh<<' '<<minh<<endl;
+    int maxProduct(vector<int>& nums) {
+        int ans = INT_MIN;
+        int maxx = 1;
+        int minn = 1;
+        for(auto i:nums)
+        {
+            int y = maxx;
+            maxx = max({i*maxx,i,i*minn});
+            minn = min({i*y,i*minn,i});
+            ans = max({ans,maxx,minn});
         }
         return ans;
     }
