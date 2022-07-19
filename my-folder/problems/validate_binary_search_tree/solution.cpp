@@ -10,21 +10,24 @@
  * };
  */
 class Solution {
-public: 
+public:
     bool isValidBST(TreeNode* root) {
-        return check(root,nullptr,nullptr);
+        return valid(root,nullptr,nullptr);
     }
-    
-    bool check(TreeNode* root,TreeNode* minnode,TreeNode* maxnode)
+    bool valid(TreeNode* root,TreeNode* minnode,TreeNode* maxnode)
     {
         if(root==nullptr)
         {
             return 1;
         }
-        if((minnode and root->val<=minnode->val) or (maxnode and root->val>=maxnode->val))
+        if(minnode!=nullptr and root->val<=minnode->val)
         {
             return 0;
         }
-        return check(root->left,minnode,root)&check(root->right,root,maxnode);
+        if(maxnode!=nullptr and root->val>=maxnode->val)
+        {
+            return 0;
+        }
+        return valid(root->left,minnode,root)&valid(root->right,root,maxnode);
     }
 };
