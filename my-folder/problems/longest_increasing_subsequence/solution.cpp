@@ -1,31 +1,26 @@
 class Solution {
 public:
-    int solve(vector<int> &nums,int i,int j,vector<int> &dp)
+    int solve(vector<int> &nums,int n,int last,vector<vector<int>> &dp)
     {
-        if(i==nums.size())
+        if(n==nums.size())
         {
             return 0;
-        }
-        if(dp[j+1]!=-1)
+        } 
+        if(dp[n][last+1]!=-1)
         {
-            return dp[i];
+            return dp[n][last+1];
         }
-        int inc = -1;
-        if(j==-1 or nums[i]>nums[j])
+        int inc = -1,exc = -1;
+        if(last==-1 or nums[n]>nums[last])
         {
-           inc = 1+solve(nums,i+1,i,dp);
+            inc = 1+solve(nums,n+1,n,dp);
         }
-        int exc = solve(nums,i+1,j,dp);
+        exc = solve(nums,n+1,last,dp);
         
-        return dp[j+1]=max(inc,exc);
+        return dp[n][last+1]=max(inc,exc);
     }
-    int lengthOfLIS(vector<int>& nums) 
-    {   
-        vector<int> dp(nums.size()+2);
-        for(int i=0;i<nums.size()+2;i++)
-        { 
-           dp[i] = (-1); 
-        }
+    int lengthOfLIS(vector<int>& nums) {
+        vector<vector<int>> dp(nums.size()+1,vector<int>(nums.size()+1,-1));
         return solve(nums,0,-1,dp);
     }
 };
