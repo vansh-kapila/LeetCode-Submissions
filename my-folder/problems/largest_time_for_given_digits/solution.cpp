@@ -1,50 +1,46 @@
-class Solution
-{
-    public:
-        bool validstring(string & str)
-        {
-            if (str[0] >= '3')
-            {
-                return 0;
-            }
-            if (str[0] == '2' and str[1] >= '4')
-            {
-                return 0;
-            }
-            if (str[3] >= '6')
-            {
-                return 0;
-            } 
-            return 1;
-        }
-    
-    string largestTimeFromDigits(vector<int> &arr)
+class Solution {
+public: 
+    bool valid(string &str)
     {
-        string ans;
+        if(str[0]>'2')
+        {
+            return 0;
+        }
+        if(str[0]=='2' and str[1]>='4')
+        {
+            return 0;
+        }
+        if(str[3]>='6')
+        {
+            return 0;
+        }
+        return 1;
+    }
+    string time(vector<int> &arr)
+    {
+        string ret;
+        ret.push_back(arr[0]+'0');
+        ret.push_back(arr[1]+'0');
+        ret.push_back(':');
+        ret.push_back(arr[2]+'0');
+        ret.push_back(arr[3]+'0');
+        return ret;
+    }
+    string largestTimeFromDigits(vector<int>& arr) { 
         sort(arr.begin(),arr.end());
-        ans.push_back('0' + arr[0]);
-        ans.push_back('0' + arr[1]);
-        ans.push_back(':');
-        ans.push_back('0' + arr[2]);
-        ans.push_back('0' + arr[3]);
-        if (!validstring(ans))
+        string ans;
+        string str = time(arr);
+        if(valid(str))
         {
-            ans.clear();
-        } 
-        string str;
-        while (next_permutation(arr.begin(), arr.end()))
+            ans = max(ans,str);
+        }
+        while(next_permutation(arr.begin(),arr.end()))
         {
-            str.push_back('0' + arr[0]);
-            str.push_back('0' + arr[1]);
-            str.push_back(':');
-            str.push_back('0' + arr[2]);
-            str.push_back('0' + arr[3]);
-            if (!validstring(str))
+            string str = time(arr);
+            if(valid(str))
             {
-                str.clear();
+                ans = max(ans,str);
             }
-            ans = max(ans, str);
-            str.clear();
         }
         return ans;
     }
